@@ -12,20 +12,23 @@ RUN make -j4
 RUN make install
 RUN ldconfig
 
-# prerequisites for node bindings
-# RUN apt-get install build-essential
-RUN yarn global add node-gyp
-
-ADD . /app
-
-# add node bindings
-# RUN yarn add node-postal
-
+# set up app dir
+RUN mkdir -p /app/server
 WORKDIR /app/server
+
+# build node_modules directly into the image
+COPY server/package.json /app/server/package.json
+COPY server/yarn.lock /app/server/yarn.lock
+RUN yarn global add node-gyp
+RUN yarn install
+
+# copy source over, but without ignored paths such as node_modules
+COPY . /app
+
+# start server
 CMD [ "yarn", "start" ]
 
-RUN echo "alias l=\"ls -laF --color\"" >> ~root/.bashrc
-RUN echo "alias ..=\"cd ..\"" >> ~root/.bashrc
+# debug
+# RUN echo "alias l=\"ls -laF --color\"" >> ~root/.bashrc
+# RUN echo "alias ..=\"cd ..\"" >> ~root/.bashrc
 # CMD [ "bash" ]
-
-# TODO dockerignore e.g. Dockerfile itself
