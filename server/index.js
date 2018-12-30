@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const postal = require('node-postal')
 
-const port = 3000
+const port = 5000
 
 const cors = (req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*')

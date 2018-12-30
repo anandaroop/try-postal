@@ -26,7 +26,7 @@ class App extends Component {
 
     if (q.length > 0) {
       /* /parse endpoint */
-      url = new URL('http://localhost:4567/parse')
+      url = new URL(`${process.env.REACT_APP_POSTAL_API_URL}/parse`)
       params = { q }
       Object.keys(params).forEach(key =>
         url.searchParams.append(key, params[key])
@@ -41,7 +41,7 @@ class App extends Component {
         )
 
       /* /expand endpoint */
-      url = new URL('http://localhost:4567/expand')
+      url = new URL(`${process.env.REACT_APP_POSTAL_API_URL}/expand`)
       params = { q }
       Object.keys(params).forEach(key =>
         url.searchParams.append(key, params[key])
