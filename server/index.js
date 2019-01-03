@@ -4,14 +4,18 @@ const postal = require('node-postal')
 
 const port = 5000
 
+// implement a lenient CORS policy
 const cors = (req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*')
   next()
 }
-
 app.use(cors)
 
-app.get('/api', (_req, res) => res.send('Hello World'))
+// serve the CRA build as public static assets
+app.use(express.static('public'))
+
+// serve libpostal results as a simple API
+app.get('/api', (_req, res) => res.send('OK'))
 
 app.get('/api/parse', (req, res) => {
   const { q } = req.query
@@ -38,4 +42,5 @@ app.get('/api/expand', (req, res) => {
   res.json(result)
 })
 
+// start the server
 app.listen(port, () => console.log(`Web server listening on port ${port}`))
