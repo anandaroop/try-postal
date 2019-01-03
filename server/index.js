@@ -11,9 +11,9 @@ const cors = (req, res, next) => {
 
 app.use(cors)
 
-app.get('/', (_req, res) => res.send('Hello World'))
+app.get('/api', (_req, res) => res.send('Hello World'))
 
-app.get('/parse', (req, res) => {
+app.get('/api/parse', (req, res) => {
   const { q } = req.query
   if (q === undefined || q.trim().length === 0) {
     res.status(400).send('Param q is required')
@@ -29,7 +29,7 @@ app.get('/parse', (req, res) => {
   res.json(dict)
 })
 
-app.get('/expand', (req, res) => {
+app.get('/api/expand', (req, res) => {
   const { q } = req.query
   if (q === undefined || q.trim().length === 0) {
     res.status(400).send('Param q is required')
