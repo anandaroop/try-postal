@@ -25,7 +25,15 @@ RUN yarn install
 # copy source over, but without ignored paths such as node_modules
 COPY . /app
 
+# build the CRA app
+WORKDIR /app/client
+RUN yarn install
+RUN yarn run build
+RUN rm -rf node_modules
+RUN mv ./build ../server/public
+
 # start server
+WORKDIR /app/server
 CMD [ "yarn", "start" ]
 
 # debug
